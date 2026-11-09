@@ -24,7 +24,7 @@ def test_general_meme_bloc_pour_tous(donnees: Donnees) -> None:
     noor = partie_du_jour("noor", jour, CONFIG, LISTES, None)
     assert marius.bloc == noor.bloc
     assert (marius.prenom, marius.mot_de) == ("MARIUS", None)
-    assert (noor.prenom, noor.mot_de) == ("NOOR", "Marius")
+    assert (noor.prenom, noor.mot_de) == ("NOOR", "Camille")
     assert marius.ville == "Lyon" and marius.meteo is None
 
 

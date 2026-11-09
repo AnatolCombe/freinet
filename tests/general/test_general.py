@@ -21,7 +21,7 @@ from tests.general.listes import (
 
 def test_lecture(tmp_path: Path) -> None:
     config, listes = charger(ecrire_general(tmp_path))
-    assert config.profil("noor") == Profil("NOOR", "Marius")
+    assert config.profil("noor") == Profil("NOOR", "Camille")
     assert config.profil("marius") == Profil("MARIUS")
     assert config.profil("alice") == Profil("ALICE")  # élève hors config : prénom = nom
     assert config.langues[-1] == "hébreu" and config.seuil_pluie == 20
@@ -74,7 +74,7 @@ def _sans(cle: str) -> dict[str, object]:
         ({"config": {**CONFIG, "langues": []}}, "« langues »"),
         ({"config": {**CONFIG, "seuil_pluie": 140}}, "seuil"),
         ({"config": _sans("ville")}, "« ville »"),
-        ({"config": {**CONFIG, "eleves": {"noor": {"mot_de": "Marius"}}}}, "« prenom »"),
+        ({"config": {**CONFIG, "eleves": {"noor": {"mot_de": "Camille"}}}}, "« prenom »"),
     ],
 )
 def test_factory_invalide(tmp_path: Path, remplacement: dict[str, Any], message: str) -> None:

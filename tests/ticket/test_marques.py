@@ -21,12 +21,12 @@ def _bib(dossier: Path) -> Bibliotheque:
 
 def test_marques_d_ecriture_et_separation(tmp_path: Path) -> None:
     corps = (
-        "## Un mot de Marius\n\n[écrire : 2]\n\n> Allez.\n\nSuite du jour.\n\n"
+        "## Un mot de Camille\n\n[écrire : 2]\n\n> Allez.\n\nSuite du jour.\n\n"
         "[séparation]\n\n## Notes\n\n[cadre : 5]\n"
     )
     ticket = lire_ticket(_plan(tmp_path, corps), _bib(tmp_path))
     assert ticket.blocs == (
-        Bloc("titre", "Un mot de Marius"),
+        Bloc("titre", "Un mot de Camille"),
         Bloc("ecrire", "écrire", 2),
         Bloc("citation", "Allez."),
         Bloc("texte", "Suite du jour."),
@@ -70,7 +70,7 @@ def test_sans_prenom_l_en_tete_ne_change_pas(tmp_path: Path) -> None:
 
 
 def test_png_des_marques_et_du_prenom(tmp_path: Path) -> None:
-    corps = "## Un mot de Marius\n\n[écrire : 2]\n\n> Allez.\n\n[séparation]\n\n[cadre : 5]\n"
+    corps = "## Un mot de Camille\n\n[écrire : 2]\n\n> Allez.\n\n[séparation]\n\n[cadre : 5]\n"
     ticket = lire_ticket(_plan(tmp_path, corps, "prenom: NOOR\n"), _bib(tmp_path))
     image = png_ticket(ticket)
     assert image.tobytes() != png_ticket(replace(ticket, prenom=None)).tobytes()

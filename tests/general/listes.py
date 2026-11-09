@@ -22,7 +22,7 @@ CONFIG: dict[str, object] = {
     "langues": ["roumain", "allemand", "anglais", "espagnol", "hébreu"],
     "eleves": {
         "marius": {"prenom": "MARIUS"},
-        "noor": {"prenom": "NOOR", "mot_de": "Marius"},
+        "noor": {"prenom": "NOOR", "mot_de": "Camille"},
     },
 }
 
@@ -33,7 +33,7 @@ CONFIG_EN: dict[str, object] = {
     "langues_en": LANGUES_EN,
     "eleves": {
         "marius": {"prenom": "MARIUS"},
-        "noor": {"prenom": "NOOR", "mot_de": "Marius", "langue": "en"},
+        "noor": {"prenom": "NOOR", "mot_de": "Camille", "langue": "en"},
     },
 }
 

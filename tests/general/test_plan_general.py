@@ -24,7 +24,7 @@ def test_ticket_du_couple_de_reference(tmp_path: Path, update_ref: bool) -> None
 def test_ordre_des_sections(tmp_path: Path) -> None:
     chemin, bib = plan_couple(tmp_path)
     titres = [b.texte for b in lire_ticket(chemin, bib).blocs if b.genre == "titre"]
-    assert titres[:2] == ["Météo · Lyon", "Un mot de Marius"]
+    assert titres[:2] == ["Météo · Lyon", "Un mot de Camille"]
     assert titres[-4:] == [
         "Mot du jour · Allemand",
         "Ce jour-là · 6 janvier",
@@ -40,7 +40,7 @@ def test_mot_de_seulement_sur_le_ticket_configure(tmp_path: Path) -> None:
     texte = texte_ticket(lire_ticket(chemin, bib))
     assert "UN MOT DE" not in texte and texte.startswith("FREINET · MARIUS\n")
     chemin, bib = plan_couple(tmp_path / "elle")
-    assert "UN MOT DE MARIUS" in texte_ticket(lire_ticket(chemin, bib))
+    assert "UN MOT DE CAMILLE" in texte_ticket(lire_ticket(chemin, bib))
 
 
 def test_meteo_absente(tmp_path: Path) -> None:
@@ -83,7 +83,7 @@ def test_partie_generale_en_anglais(tmp_path: Path) -> None:
     entete, corps = lire(chemin)
     assert entete["langue"] == "en"
     assert "## Weather · Lyon" in corps and "wind 29 km/h S" in corps
-    assert "## A word from Marius\n\n[écrire : 2]" in corps
+    assert "## A word from Camille\n\n[écrire : 2]" in corps
     assert "## Word of the day · German" in corps
     assert "## On this day · 6 January" in corps and "1412 : Joan of Arc" in corps
     assert "## Tuesday puzzle · Words" in corps and "## Notes" in corps
