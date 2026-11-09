@@ -26,7 +26,7 @@ Usage criteria set for V0 (not yet reported): seven consecutive tickets without 
 ## V2 — first learners beyond the author (planned)
 
 - New maps on declared subjects, enrolment, a channel for each learner, access to the QR page outside the home network
-- Ideas from the backlog: content with an expiry date, credited domain reviewers, a trial week on an existing map, consent and erasure for personal data, learner data export, Anki import, implicit repetition through prerequisites
+- Ideas from the backlog: content with an expiry date, credited domain reviewers, a trial week on an existing map, consent and erasure for personal data (a one-command `forget`), learner data export, Anki import, implicit repetition through prerequisites
 
 ## V3 — a hosted network of learners (planned)
 

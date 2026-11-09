@@ -54,6 +54,7 @@ flowchart LR
 6. **Feedback.** The QR opens a page on the local network where the learner rates each question 1 to 4. Ratings are appended to a log; FSRS state and mastery are recomputed from that log, and tomorrow's ticket reflects them.
 
 See [docs/architecture.md](docs/architecture.md) for modules, data flow and invariants.
+What Freinet stores and sends, and how it protects children: [docs/privacy.md](docs/privacy.md) and [docs/safeguarding.md](docs/safeguarding.md).
 
 ## Design principles
 
