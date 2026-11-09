@@ -104,8 +104,11 @@ def _appeler(appel: list[str], resume: str, delai: float) -> str | None:
             sortie = None
         finally:
             if processus.returncode is None:
-                with contextlib.suppress(ProcessLookupError):
+                # macOS : killpg rend EPERM quand le groupe ne compte plus qu'un zombie.
+                with contextlib.suppress(ProcessLookupError, PermissionError):
                     os.killpg(processus.pid, signal.SIGKILL)
+                with contextlib.suppress(ProcessLookupError):
+                    processus.kill()
                 with contextlib.suppress(subprocess.TimeoutExpired):
                     processus.wait(timeout=5)
             if processus.stdout is not None:
