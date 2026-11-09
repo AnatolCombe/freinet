@@ -1,0 +1,414 @@
+/* Pages de cours et page du QR — feuille unique, inlinée par pages.document().
+   Clair : papier, encre, rouge sang (DA PAMPHLET). Sombre : noir à nuance verte (DA BRAIN).
+   Échelles d'espacement et de typo reprises d'un système de design tokens (système 4px, ratio 1.25).
+   Aucune ressource externe : la page doit s'ouvrir sur le réseau de la maison sans Internet. */
+
+:root {
+  --papier: #f4efe6;
+  --papier-2: #ebe4d6;
+  --encre: #1b1916;
+  --encre-2: #57514a;
+  --encre-3: #8a8278;
+  --trait: rgba(27, 25, 22, .13);
+  --trait-2: rgba(27, 25, 22, .28);
+  --sang: #8b1d1d;
+  --vert: #2f6b45;
+  --or: #9a7224;
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  --mono: "Courier Prime", "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+  --space-2xs: .25rem;
+  --space-xs: .5rem;
+  --space-sm: .75rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2.5rem;
+  --space-2xl: 4rem;
+  --text-xs: .75rem;
+  --text-sm: .875rem;
+  --text-base: clamp(1.02rem, .98rem + .2vw, 1.125rem);
+  --text-lg: clamp(1.2rem, 1.1rem + .4vw, 1.4rem);
+  --text-2xl: clamp(2rem, 1.6rem + 1.8vw, 2.9rem);
+  --radius: .25rem;
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --papier: #0b0e0b;
+    --papier-2: #131812;
+    --encre: #e2ded3;
+    --encre-2: #a6a498;
+    --encre-3: #6c6e64;
+    --trait: rgba(255, 255, 255, .09);
+    --trait-2: rgba(255, 255, 255, .2);
+    --sang: #e07a6e;
+    --vert: #5cc98a;
+    --or: #d4a853;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--papier);
+  color: var(--encre);
+  font-family: var(--serif);
+  font-size: var(--text-base);
+  line-height: 1.6;
+  font-feature-settings: "kern", "liga", "onum";
+  -webkit-font-smoothing: antialiased;
+}
+
+.feuille {
+  max-width: 38rem;
+  margin: 0 auto;
+  padding: 0 1.25rem var(--space-2xl);
+}
+
+/* ---------- Tête : marque et double filet, façon journal ---------- */
+.tete {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-md);
+  padding: var(--space-lg) 0 var(--space-xs);
+  border-bottom: 3px double var(--trait-2);
+  margin-bottom: var(--space-xl);
+}
+.marque {
+  font-size: var(--text-lg);
+  font-style: italic;
+  letter-spacing: .02em;
+  text-decoration: none;
+  color: var(--encre);
+}
+.marque::first-letter { color: var(--sang); }
+.tete nav a {
+  font-family: var(--mono);
+  font-size: var(--text-xs);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--encre-2);
+}
+
+/* ---------- Titres ---------- */
+.surtitre {
+  margin: 0 0 var(--space-xs);
+  font-family: var(--mono);
+  font-size: var(--text-xs);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--sang);
+}
+.surtitre a { color: inherit; text-decoration: none; }
+.surtitre a:hover { text-decoration: underline; }
+h1 {
+  margin: 0 0 var(--space-lg);
+  font-size: var(--text-2xl);
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -.02em;
+  text-wrap: balance;
+}
+h2 {
+  margin: var(--space-xl) 0 var(--space-md);
+  padding-top: var(--space-sm);
+  border-top: 1px solid var(--trait);
+  font-family: var(--mono);
+  font-size: var(--text-xs);
+  font-weight: 400;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--encre-3);
+}
+p { margin: 0 0 var(--space-md); }
+small { font-size: var(--text-sm); color: var(--encre-3); }
+
+a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--sang) 55%, transparent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: .2em;
+  transition: color .15s, text-decoration-color .15s;
+}
+a:hover { color: var(--sang); text-decoration-color: var(--sang); }
+a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visible {
+  outline: 2px solid var(--sang);
+  outline-offset: 2px;
+}
+
+ul, ol { margin: 0 0 var(--space-md); padding: 0; list-style: none; }
+
+/* ---------- Sommaire : une ligne par carte ---------- */
+.index li { border-bottom: 1px solid var(--trait); }
+.index li:first-child { border-top: 1px solid var(--trait); }
+.index a {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-md);
+  padding: var(--space-md) 0;
+  text-decoration: none;
+  font-size: var(--text-lg);
+}
+.index .meta, .notions .meta {
+  flex: none;
+  font-family: var(--mono);
+  font-size: var(--text-xs);
+  letter-spacing: .08em;
+  color: var(--encre-3);
+}
+.vide { color: var(--encre-3); font-style: italic; }
+
+/* ---------- Notions numérotées (carte, page du jour) ---------- */
+.notions { counter-reset: notion; }
+.notions li {
+  counter-increment: notion;
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-sm);
+  padding: var(--space-sm) 0;
+  border-bottom: 1px solid var(--trait);
+}
+.notions li::before {
+  content: counter(notion, decimal-leading-zero);
+  flex: none;
+  width: 1.8rem;
+  font-family: var(--mono);
+  font-size: var(--text-xs);
+  color: var(--encre-3);
+}
+.notions li > a { flex: 1; }
+.etat {
+  flex: none;
+  font-family: var(--mono);
+  font-size: .7rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  padding: .1rem .45rem;
+  border: 1px solid var(--trait-2);
+  border-radius: 99px;
+  color: var(--encre-3);
+}
+.etat-acquis { color: var(--vert); border-color: currentColor; }
+.etat-en_cours { color: var(--sang); border-color: currentColor; }
+.etat-debloque { color: var(--or); border-color: currentColor; }
+
+/* ---------- Quêtes ---------- */
+.quetes li {
+  padding: var(--space-sm) var(--space-md);
+  margin-bottom: var(--space-sm);
+  border-left: 2px solid var(--sang);
+  background: var(--papier-2);
+}
+.quetes b { display: block; font-weight: 600; margin-bottom: var(--space-2xs); }
+.chemin { font-size: var(--text-sm); color: var(--encre-2); }
+
+/* ---------- Fiche ---------- */
+.lecon p:first-child { font-size: var(--text-lg); line-height: 1.5; }
+.anecdotes li {
+  margin-bottom: var(--space-lg);
+  padding-left: var(--space-md);
+  border-left: 1px solid var(--trait-2);
+  font-style: italic;
+}
+.anecdotes small { display: block; margin-top: var(--space-2xs); font-style: normal; }
+.sources { counter-reset: source; }
+.sources li {
+  counter-increment: source;
+  display: flex;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-xs);
+  font-size: var(--text-sm);
+  color: var(--encre-2);
+}
+.sources li::before {
+  content: "[" counter(source) "]";
+  flex: none;
+  font-family: var(--mono);
+  color: var(--encre-3);
+}
+.voisines { margin-bottom: var(--space-lg); }
+.voisines li { padding: var(--space-2xs) 0; color: var(--encre-2); }
+.voisines li.carte-de {
+  margin-top: var(--space-sm);
+  font-family: var(--mono);
+  font-size: var(--text-xs);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--encre-3);
+}
+.voisines li.carte-de:first-child { margin-top: 0; }
+.voisines a { color: var(--encre); }
+
+/* ---------- Page du QR ---------- */
+.encart {
+  padding: var(--space-sm) var(--space-md);
+  margin-bottom: var(--space-md);
+  background: var(--papier-2);
+  border-radius: var(--radius);
+  border-left: 2px solid var(--or);
+}
+.du-jour { font-size: var(--text-lg); }
+.semaine {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: var(--text-sm);
+  color: var(--encre-2);
+}
+.points { display: inline-flex; gap: 4px; }
+.points i {
+  width: .7rem;
+  height: .7rem;
+  border: 1px solid var(--trait-2);
+  border-radius: 2px;
+}
+.points i.plein { background: var(--encre); border-color: var(--encre); }
+
+.q {
+  margin: var(--space-lg) 0;
+  padding: var(--space-md) var(--space-md) var(--space-sm);
+  border: 1px solid var(--trait);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--papier-2) 45%, transparent);
+}
+.q .enonce { font-size: var(--text-lg); line-height: 1.4; }
+.q .num {
+  display: block;
+  margin-bottom: var(--space-2xs);
+  font-family: var(--mono);
+  font-size: var(--text-xs);
+  font-weight: 400;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--sang);
+}
+details { margin: 0 0 var(--space-md); }
+summary {
+  cursor: pointer;
+  width: fit-content;
+  font-family: var(--mono);
+  font-size: var(--text-xs);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--encre-2);
+  list-style: none;
+}
+summary::-webkit-details-marker { display: none; }
+summary::before { content: "▸ "; }
+details[open] summary::before { content: "▾ "; }
+details p { margin-top: var(--space-xs); padding-left: var(--space-md); }
+
+.notes {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-xs);
+  margin-bottom: var(--space-sm);
+}
+@media (min-width: 36rem) { .notes { grid-template-columns: repeat(4, 1fr); } }
+
+button {
+  font: inherit;
+  font-family: var(--mono);
+  font-size: var(--text-sm);
+  min-height: 2.75rem;
+  padding: var(--space-xs);
+  white-space: nowrap;
+  color: var(--encre);
+  background: transparent;
+  border: 1px solid var(--trait-2);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background .15s, color .15s, border-color .15s;
+}
+button:hover { border-color: var(--encre); }
+button.choisie { background: var(--encre); color: var(--papier); border-color: var(--encre); }
+button[value="1"].choisie { background: var(--sang); border-color: var(--sang); }
+button[value="4"].choisie { background: var(--vert); border-color: var(--vert); }
+.joker { margin: var(--space-lg) 0; }
+.joker button { width: 100%; }
+
+.aide {
+  padding: var(--space-sm) var(--space-md);
+  margin: var(--space-xs) 0 var(--space-sm);
+  font-size: var(--text-sm);
+  background: var(--papier-2);
+  border-radius: var(--radius);
+}
+.info { color: var(--encre-2); font-size: var(--text-sm); }
+
+/* ---------- Saisie du code ---------- */
+.code { display: grid; gap: var(--space-sm); }
+.code label {
+  font-family: var(--mono);
+  font-size: var(--text-xs);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--encre-3);
+}
+.code input {
+  width: 100%;
+  margin-top: var(--space-xs);
+  padding: var(--space-sm);
+  font-family: var(--mono);
+  font-size: var(--text-lg);
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  color: var(--encre);
+  background: var(--papier-2);
+  border: 1px solid var(--trait-2);
+  border-radius: var(--radius);
+}
+.code button { background: var(--encre); color: var(--papier); border-color: var(--encre); }
+
+/* ---------- Tête publique à deux liens ---------- */
+.tete nav { display: flex; flex-wrap: wrap; gap: var(--space-md); }
+
+/* ---------- Espace du ticket : barre d'onglets fixe en bas ---------- */
+body.espace .feuille {
+  padding-bottom: calc(var(--space-2xl) + 3.5rem + env(safe-area-inset-bottom, 0px));
+}
+.onglets {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  padding: 0 1rem env(safe-area-inset-bottom, 0px);
+  background: color-mix(in srgb, var(--papier) 92%, transparent);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  border-top: 1px solid var(--trait-2);
+}
+.onglets a {
+  flex: 1;
+  max-width: 12.5rem;
+  margin-top: -1px;
+  padding: var(--space-md) var(--space-xs);
+  text-align: center;
+  text-decoration: none;
+  font-family: var(--mono);
+  font-size: var(--text-xs);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--encre-3);
+  border-top: 2px solid transparent;
+}
+.onglets a[aria-current="page"] { color: var(--encre); border-top-color: var(--sang); }
+
+/* ---------- Revoir la leçon, sous la question ---------- */
+.revoir .suite {
+  font-family: var(--mono);
+  font-size: var(--text-xs);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}

@@ -1,0 +1,79 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+ENV/
+env/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+coverage.json
+coverage.xml
+htmlcov/
+.coverage_html/
+
+# Secrets — .env.example est LE seul fichier d'env versionné
+.env
+.env.*
+!.env.example
+client_secret_*.json
+secrets.toml
+credentials*
+*.key
+*.pem
+_config/.canary.env
+
+# Node
+node_modules/
+dist/
+build/
+.next/
+.cache/
+coverage/
+
+# Worktrees — TOUJOURS hors du repo (../<projet>.worktrees/), jamais dedans
+.claude/worktrees/
+
+# Artefacts & backups
+*.bak
+*.zip
+*.log
+
+# Médias lourds — commenter une ligne si des assets versionnés sont voulus (sinon: data/ ou LFS)
+*.wav
+*.mp3
+*.mp4
+*.mov
+*.dwg
+
+# macOS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Project
+graphify-out/
+data/
+
+# --- FREINET : données privées des élèves (inv. 11) ---
+data/
+brainiacs/*/
+!brainiacs/_index/
+!brainiacs/_templates/
+quotidien/*/output/*
+!quotidien/*/output/.gitkeep
+fanout/_publies/
+
+# Hypothesis (base d exemples locale)
+.hypothesis/

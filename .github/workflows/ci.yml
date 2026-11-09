@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: ${{ matrix.os }} / Python 3.11
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    env:
+      FREINET_SANS_LLM: "1"
+      FREINET_SANS_RESEAU: "1"
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up uv and Python 3.11
+        uses: astral-sh/setup-uv@v6
+        with:
+          python-version: "3.11"
+
+      - name: Install
+        run: uv sync --locked
+
+      - name: Ruff (lint)
+        run: uv run ruff check .
+
+      - name: Ruff (format)
+        run: uv run ruff format --check .
+
+      - name: Mypy (strict)
+        run: uv run mypy --strict
+
+      - name: Pytest (coverage ≥ 85 %)
+        run: uv run pytest
+
+      - name: Generated index and stage contracts
+        run: |
+          uv run python scripts/regen-index.py --check
+          uv run python scripts/verif-contrats.py

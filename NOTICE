@@ -1,0 +1,9 @@
+Freinet
+Copyright 2026 Marius Dissat
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+This product embeds subsets of the DejaVu Sans and DejaVu Sans Bold fonts
+(freinet/polices/), which are distributed under the Bitstream Vera and Arev
+font licenses; DejaVu changes are in the public domain. See
+freinet/polices/LICENSE_DEJAVU.

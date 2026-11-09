@@ -1,0 +1,54 @@
+name: Bug report
+description: Something does not work as documented.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting. Please **do not paste personal data** (learner names, plans, tickets, database content). Use the demo map and a fictional learner to reproduce.
+        Security problems: see SECURITY.md instead of opening an issue.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you did, what you expected, what you got.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: Commands, from a fresh clone if possible.
+      placeholder: |
+        uv sync
+        uv run python -m freinet.eleves ajouter demo Europe/Paris
+        ...
+    validations:
+      required: true
+  - type: textarea
+    id: output
+    attributes:
+      label: Output or traceback
+      render: text
+  - type: input
+    id: version
+    attributes:
+      label: Commit
+      description: Output of `git rev-parse --short HEAD`.
+  - type: input
+    id: platform
+    attributes:
+      label: Platform and Python
+      placeholder: macOS 15 / Python 3.12, or Ubuntu 24.04 / Python 3.11
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Engine (FSRS, mastery, replay, selection)
+        - Ticket rendering or printing
+        - QR page or course pages
+        - Fan-out or publication
+        - Scheduling (launchd, heartbeat)
+        - Documentation
+        - Other
