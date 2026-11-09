@@ -227,7 +227,7 @@ def test_meme_partie_generale_pour_deux_eleves(tmp_path: Path) -> None:
     elle, corps = lire(racine / "brainiacs" / "noor" / "plans" / "2026-01-05.md")
     assert lui["general"] == elle["general"]
     assert (lui["prenom"], elle["prenom"]) == ("MARIUS", "NOOR")
-    assert "## A word from Marius\n\n[écrire : 2]" in corps  # noor lit l'anglais (A13)
+    assert "## A word from Camille\n\n[écrire : 2]" in corps  # noor lit l'anglais (A13)
 
 
 def test_partie_generale_invalide_le_ticket_sort_quand_meme(
@@ -257,7 +257,7 @@ def test_plan_d_un_eleve_anglophone(tmp_path: Path) -> None:
     chemin = quotidien.preparer_jour(racine, "noor", depuis_iso(LUNDI), False, dossier)
     entete, corps = lire(chemin)
     assert entete["langue"] == "en" and entete["prenom"] == "NOOR"
-    assert "> One more step today." in corps and "## A word from Marius" in corps
+    assert "> One more step today." in corps and "## A word from Camille" in corps
     assert "## Word of the day · Romanian" in corps  # lundi 5 janvier : rang 0
     marius = quotidien.preparer_jour(racine, "marius", depuis_iso(LUNDI), False, dossier)
     assert "langue" not in lire(marius)[0]
